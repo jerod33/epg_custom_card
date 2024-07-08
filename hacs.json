@@ -1,4 +1,6 @@
 {
     "name": "CZSK Tv program guide",
-    "content_in_root": true
+    "content_in_root": true,
+    "render_readme": true,
+    "filename": "program_guide_card.js"
   }
