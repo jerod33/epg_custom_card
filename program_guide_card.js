@@ -27,7 +27,7 @@ class ProgramGuideCard extends LitElement {
 
   setConfig(config) {
     if (!config.epg_today || !config.epg_yesterday || !config.channel_info) {
-      throw new Error("You need to define epg_today, epg_yesterday, and channel_info in the configuration.");
+      throw new Error("Musíte definovat epg_today, epg_yesterday a channel_info v konfigurac.");
     }
     this.config = config;
   }
