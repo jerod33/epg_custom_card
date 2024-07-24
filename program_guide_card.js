@@ -30,6 +30,11 @@ static get properties() {
    //this.channelInfo = {};
    this.channelNames = [];
    this.showRemote = false;
+   console.info(
+    `%c EPG V 05 %c  `,
+    'color: white; background: blue; font-weight: 700;',
+    'color: blue; background: white; font-weight: 700;',
+  );
  }
 
  setConfig(config) {
