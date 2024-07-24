@@ -24,7 +24,7 @@ class ProgramGuideCard extends LitElement {
     this.channelNames = [];
     this.showRemote = false;
     console.info(
-      `%c EPG V 05.1 %c  `,
+      `%c EPG V 05.2 %c  `,
       'color: white; background: blue; font-weight: 700;',
       'color: blue; background: white; font-weight: 700;',
     );
@@ -106,6 +106,7 @@ class ProgramGuideCard extends LitElement {
   }
 
   render() {
+    const logoPath = "/local/program_guide/loga_velka/";
     return html`
       <link rel="stylesheet" type="text/css" href="/local/scripts/ane.css" />
       <div class='epg-container'>
@@ -114,7 +115,7 @@ class ProgramGuideCard extends LitElement {
           <nav class='vertical-align-middle scroll'>
             ${this.programData.map(program => {
               return program.current
-                ? html`<span class='nav-item'><img src="/local/program_guide/loga_velka/${program.current.channelLogo}" id="${program.current.channel_id_tv}" @click="${this.updateQuery} "></span>`
+                ? html`<span class='nav-item'><img src="${logoPath}${program.current.channelLogo}" id="${program.current.channel_id_tv}" @click="${this.updateQuery} "></span>`
                 : html`<div class="not-found">Entity ${program.current.entity} not found.</div>`;
             })}
           </nav>
@@ -124,7 +125,7 @@ class ProgramGuideCard extends LitElement {
       <div id="on_air">  
         ${this.programData.map(program => html`
           <section id="page">
-            <aside class="side"><img src="/local/program_guide/loga_velka/${program.current.channelLogo}" @click="${ev => this._ch_switch(program.current.channel_id_tv)}"></aside>
+            <aside class="side"><img src="${logoPath}${program.current.channelLogo}" @click="${ev => this._ch_switch(program.current.channel_id_tv)}"></aside>
             <main>
               <details class="content">
                 <summary >
@@ -266,108 +267,374 @@ class ProgramGuideCard extends LitElement {
 
   static get styles() {
     return css`
-      .epg-container {
-        display: flex;
-        flex-direction: column;
-        margin: 16px;
-        padding: 16px;
-        border-radius: 8px;
-        background-color: var(--ha-card-background, var(--card-background-color, white));
-        box-shadow: var(--ha-card-box-shadow, none);
-      }
-      .epg-container-header {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-      }
-      .vertical-align-middle {
-        vertical-align: middle;
-      }
-      .scroll {
-        overflow-x: auto;
-        white-space: nowrap;
-      }
-      .nav-item {
-        display: inline-block;
-        margin-right: 16px;
-      }
-      .nav-item img {
-        cursor: pointer;
-      }
-      .remote {
-        position: fixed;
-        bottom: 16px;
-        right: 16px;
-        z-index: 100;
-      }
-      .remoteToggle {
-        display: none;
-      }
-      .remoteButtons {
-        display: none;
-        flex-direction: column;
-        gap: 8px;
-      }
-      .remoteToggle:checked + img + .remoteButtons {
-        display: flex;
-      }
-      .remoteButtons img {
-        cursor: pointer;
-      }
-      #page {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        padding: 16px 0;
-      }
+    .scroll {
+      white-space: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+   
+    .epg-container {
+      position: sticky;
+      top: 5px;
+      margin-bottom: 2px;
+      border: 2px solid;
+      -webkit-box-shadow: 0 8px 6px -6px black;
+      -moz-box-shadow: 0 8px 6px -6px black;
+      box-shadow: 0 8px 6px -6px black;
+    }
+   
+    .epg-container-header .logo {
+      width: 25%;
+    }
+   
+    .epg-container-header nav {
+      width: 75%;
+    }
+   
+    header {
+      background: #152637;
+    }
+   
+    #full_day {
+      display: none;
+    }
+   
+    .epg-container-header {
+      overflow: hidden;
+      height: 100px;
+      background: rgb(229, 230, 230);
+      top: 0;
+      width: auto;
+    }
+   
+    .logo {
+      text-align: center;
+      font-weight: 700;
+      color: #727c87;
+      border-right: 1px solid rgba(114, 124, 135, 0.4);
+      padding: 12px 24px 13px;
+    }
+   
+    .nav-item {
+      padding: 12px 16px 13px;
+      display: block;
+      color: #f2f2f2;
+      text-decoration: none;
+    }
+   
+    .nav-item:not(:last-child) {
+      border-right: 1px solid rgba(114, 124, 135, 0.2);
+    }
+   
+    * {
+      box-sizing: border-box;
+    }
+   
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+      max-width: 492px;
+      margin: 10vmin auto 0;
+      color: #64cce3;
+      line-height: 1.5;
+    }
+   
+    header,
+    nav {
+      font-size: 0;
+    }
+   
+    .logo,
+    .nav-item {
+      font-size: 14px;
+    }
+   
+    .logo,
+    .nav-item,
+    .vertical-align-middle {
+      display: inline-block;
+      vertical-align: middle;
+    }
+   
+    .scroll::-webkit-scrollbar {
+      display: none;
+    }
+   
+    #page {
+      display: grid;
+      width: 100%;
+      border: 1px solid;
+      background: #e5e6e6;
+      margin-bottom: 4px;
+      grid-template-areas: "head head" "aside  main";
+      grid-template-columns: 100px 1fr;
+    }
+    
       #page_full {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        padding: 16px 0;
-      }
-      .side {
-        margin-right: 16px;
-      }
-      .side img {
-        cursor: pointer;
-      }
-      .side .time, .side .timeStop {
-        display: block;
-        text-align: center;
-        margin: 8px 0;
-      }
-      .content {
-        display: block;
-        margin-bottom: 16px;
-      }
-      .content summary {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 16px;
-        cursor: pointer;
-      }
-      .summary-title {
-        cursor: pointer;
-        font-weight: bold;
-      }
-      .summary-content {
-        margin: 8px 0;
-      }
-      .minutes, .type {
-        margin: 4px 0;
-      }
-      .d1 {
-        display: flex;
-        width: 100%;
-        background-color: var(--primary-color, lightgray);
-      }
-      .d2 {
-        height: 8px;
-        background-color: var(--secondary-color, gray);
-      }
+      display: grid;
+      width: 100%;
+      border: 1px solid;
+      background: #e5e6e6;
+      margin-bottom: 4px;
+      grid-template-areas: "head head" "aside  main";
+      grid-template-columns: 100px 1fr;
+    }
+   
+    span {
+      font-size: 1.3em;
+    }
+   
+    .minutes {
+      display: inline-block;
+      margin-top: 15px;
+      color: #555;
+      padding: 5px;
+      border-radius: 5px;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+   
+    p {
+      display: inline-block;
+      border-radius: 5px;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      margin-left: 10px;
+    }
+   
+    #page > header {
+      grid-area: head;
+      background-color: #8ca0ff;
+    }
+   
+    #page > aside {
+      grid-area: aside;
+      display: flex;
+    }
+   
+   
+    #page > main {
+      grid-area: main;
+      color: black;
+    }
+    
+    
+     #page_full > header {
+      grid-area: head;
+      background-color: #8ca0ff;
+    }
+    
+    #page_full > main {
+      grid-area: main;
+      color: black;
+    }
+    
+        #page_full > aside {
+      grid-area: aside;
+      
+    }
+   
+    img {
+      display: inline-block;
+      margin: auto;
+      max-width: 90px;
+    }
+   
+    .time {
+      color: red;
+      height: 100%;
+    }
+    .timeStop {
+      color: black;
+      height: 100%;
+    }
+   
+    details {
+           
+            margin: 10px auto;
+            background: #ffffff;
+             text-overflow: ellipsis;
+       
+            background: #e5e6e6;
+            /*background: linear-gradient(to right, #e5e6e6 70%, transparent 100%);*/
+           
+             
+          }
+          details .summary-title {
+            -webkit-user-select: none;
+               -moz-user-select: none;
+                -ms-user-select: none;
+                    user-select: none;
+            margin-left: 5px;
+            color: black;
+              font-family: Arial, Helvetica, sans-serif;
+                  font-size: 1.3em;
+            
+          }
+          details .summary-content {
+              
+              border-top: 1px solid #e2e8f0;
+              cursor: default;
+              padding: 1em;
+              font-weight: 300;
+              line-height: 1.5;
+            font-family: "Montserrat", helvetica, arial, sans-serif;
+             
+           }   
+          details summary:focus {
+            outline: none;
+          }
+          details summary::-webkit-details-marker {
+            display: none;
+           
+          } 
+          summary {
+            list-style-type: none;
+          }
+   
+    .d1 {
+      height: 6px;
+      width: 100%;
+      background-color: #ddd;
+    }
+   
+    .d2 {
+      height: 6px;
+      background-color: #D80001;
+    }
+   
+    .floating-button {
+      position: sticky;
+      z-index: 100;
+      width: 50px;
+      height: 50px;
+      background: #E91E63;
+      color: #FFF;
+      font-size: 2em;
+      border-radius: 50%;
+      top: 90vh;
+      left: 100%;
+      margin-top: -25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+      transition: all 0.3s linear;
+      overflow-x: hidden;
+    }
+   
+    .floating-button:hover {
+      box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.3);
+      margin-top: -30px;
+    }
+   
+    .floating-button:active {
+      box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.4);
+      margin-top: -32px;
+      background: #EC407A;
+    }
+   .remote {
+        position: sticky;
+        bottom: 100px;
+        right: 35px;
+        margin-left: 80%;
+    }
+    
+   
+    .remoteControl {
+      position: sticky;
+      bottom: 100px;
+      right: 35px;
+      margin-left: 80%;
+    }
+   
+    .remoteButton {
+      height: 60px;
+      width: 60px;
+      background-color: rgba(67, 83, 143, .8);
+      border-radius: 50%;
+      display: block;
+      color: #fff;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+   
+    .remoteButton i {
+      font-size: 22px;
+    }
+   
+    .remoteButtons {
+      position: absolute;
+      width: 100%;
+      bottom: 120%;
+      text-align: center;
+    }
+   
+    .remoteButtons a {
+      display: block;
+      width: 43px;
+      height: 43px;
+      border-radius: 50%;
+      text-decoration: none;
+      margin: 25px 25px 0;
+      line-height: 1.15;
+      color: #fff;
+      opacity: 0;
+      visibility: hidden;
+      position: relative;
+    }
+   
+    .remoteButtons a:hover {
+      transform: scale(1.05);
+    }
+   
+    .remoteButtons a:nth-child(1) {
+      background-color: transparent;
+      transition: opacity .2s ease-in-out .3s, transform .15s ease-in-out;
+    }
+   
+    .remoteButtons a:nth-child(2) {
+      background-color: transparent;
+      transition: opacity .2s ease-in-out .25s, transform .15s ease-in-out;
+    }
+   
+    .remoteButtons a:nth-child(3) {
+      background-color: transparent;
+      transition: opacity .2s ease-in-out .2s, transform .15s ease-in-out;
+    }
+   
+    .remoteButtons a:nth-child(4) {
+      background-color: transparent;
+      transition: opacity .2s ease-in-out .15s, transform .15s ease-in-out;
+    }
+   
+    .remoteControl a i {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+   
+    .remoteToggle {
+      -webkit-appearance: none;
+      position: absolute;
+      border-radius: 50%;
+      top: 0;
+      left: 0;
+      margin: 0;
+      width: 100%;
+      height: 85%;
+      cursor: pointer;
+      background-color: transparent;
+      border: none;
+      outline: none;
+      z-index: 2;
+      transition: box-shadow .2s ease-in-out;
+    }
+   
+    .remoteToggle:checked ~ .remoteButtons a {
+      opacity: 1;
+      visibility: visible;
+    }
     `;
   }
 }
