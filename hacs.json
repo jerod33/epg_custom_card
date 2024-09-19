@@ -1,8 +1,7 @@
 {
     "name": "Televizní průvodce českých a slovenských programů",
-    "content_in_root": false,
-    "filename": "program_guide_card.js",
-    "render_readme": true 
+    "content_in_root": true,
+    "filename": "program_guide_card.js" 
   }
  
   
