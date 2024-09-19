@@ -250,20 +250,57 @@ updateQuery(element) {
     this.shadowRoot.getElementById("full_day").style.display = "none";
   }
 
-  _ch_switch(id_tv) {
-    if (!this._hass || !this._hass.callService || !this.config) return;
-    this._hass.callService('webostv', 'button', {
-      entity_id: this.config.entity_id,
-      button: `num${id_tv}`
-    });
+  _ch_switch(tv_channel_id) {
+    if (this.config.tv_control_method === 'webostv') {
+      
+      this._hass.callService("webostv", "command", {
+        entity_id: this.config.entity_id,
+        command: "tv/openChannel",
+        payload: { channelId: tv_channel_id }
+      });
+    } 
+    else 
+      if (this.config.tv_control_method === 'remote') {
+  
+      const device = this.config.remote_device || "television"; // Použijte konfigurované zařízení nebo výchozí hodnotu
+    var tv_channel_id_str = tv_channel_id.toString();
+      if (tv_channel_id_str.length > 1) {
+      var ent_id = [];
+          for (var i = 0; i < tv_channel_id_str.length; i++) {
+          
+              ent_id.push('kanal ' + tv_channel_id_str[i]);
+          }
+      } else {
+          var ent_id = 'kanal ' + tv_channel_id;
+      }
+  
+  
+     this._hass.callService("remote", "send_command", {
+        entity_id: "remote.ovladac_remote",
+        device: this.config.remote_device || "television",
+        command: ent_id
+      });
+    
+    
+       
+    console.log("command:", ent_id);
+    console.log("device:", this.config.remote_device || "television");
+    }
   }
 
-  _remote(command) {
-    if (!this._hass || !this._hass.callService || !this.config) return;
-    this._hass.callService('webostv', 'button', {
-      entity_id: this.config.entity_id,
-      button: command
-    });
+  _remote(state) {
+    if (this.config.tv_control_method === 'webostv') {
+      this._hass.callService("webostv", "button", {
+        entity_id: this.config.entity_id,
+        button: state
+      });
+    } else if (this.config.tv_control_method === 'remote') {
+      this._hass.callService("remote", "send_command", {
+        entity_id: "remote.ovladac_remote", // tady nahradit entity id
+        device: this.config.remote_device || "television", // Použijte konfigurované zařízení nebo výchozí hodnotu
+        command: state
+      });
+    }
   }
 
   static get styles() {
