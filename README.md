@@ -19,17 +19,15 @@ Tato vlastní karta zobrazuje interaktivní televizní program v Home Assistant.
 
 ### Ručně
 
-- Stáhněte si repo a zkopírujte do adresáře www/epg_custom_card
+- Stáhněte si soubor tv-program-card.js a umístěte ho do složky www/epg_custom_card
 
-
-
-Stáhněte si soubor tv-program-card.js a umístěte ho do složky www/epg_custom_card
 Přidejte kartu do souboru ui-lovelace.yaml:
 ```yaml
 resources:
-  - url: /local/tv-program-card.js
+  - url: /local/epg_custom_card/program_guide_card.js
     type: module
-    ```
+ ```
+ 
 #Nakonfigurujte kartu ve svém ovládacím panelu Lovelace:
 ```yaml
 type: 'custom:tv-program-card'
