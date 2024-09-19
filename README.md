@@ -2,18 +2,19 @@
 
 Tato vlastní karta zobrazuje interaktivní televizní program v Home Assistant. Umožňuje uživatelům prohlížet aktuální a nadcházející pořady přímo na ovládacím panelu.
 
-Funkce:
+## Funkce:
+- Zobrazuje pro všechny zvolené stanice aktuální a nadcházející pořady
+- Umožňuje zobrazit podrobný program pro vybranou TV stanici od současného času do konce dne
+- Možnost přepínat na zvolenou stanici kliknutím na logo (funguje pouze pro LG webOS)
+- Dálkový ovladač pro LG webOS
 
-Zobrazení denního televizního programu pro vybrané kanály
-Podpora více kanálů
-Přehledné a uživatelsky přívětivé rozhraní
-Možnost přizpůsobení vzhledu a rozložení
+
 ## Instalace
 
 ### Pomocí HACS
 
 - Přidejte toto úložiště jako vlastní úložiště integrace a poté restartujte domácího asistenta
-- V části Nastavení, zařízení a služby přidejte integraci a vyhledejte „Tv-Program“
+- V části Nastavení, zařízení a služby přidejte integraci a vyhledejte „televizní průvodce“
  
 
 ### Ručně
