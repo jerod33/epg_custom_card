@@ -17,14 +17,14 @@ class ProgramGuideCard extends LitElement {
       channelNames: { type: Array }
     };
   }
-
+//toto - nahradit v query pro prepinani mezi dennim a aktualnim vysledkem vyhledavani id za vyhledavani nazvu kanalu
   constructor() {
     super();
     this.programData = [];
     this.channelNames = [];
     this.showRemote = false;
     console.info(
-      `%c EPG V 05.2 %c  `,
+      `%c EPG V 05.7.3 %c  `,
       'color: white; background: blue; font-weight: 700;',
       'color: blue; background: white; font-weight: 700;',
     );
@@ -64,11 +64,11 @@ class ProgramGuideCard extends LitElement {
     // Filtrujeme pouze aktuálně vysílaný program a jeden následující program pro každý kanál
     const filteredData = [];
     this.config.channel_info.forEach(channel => {
-      const channelData = combinedData.filter(entry => entry.channelName === channel.name);
+      const channelData = combinedData.filter(entry => entry.channel_name === channel.name);
       const currentProgram = channelData.find(entry => new Date(entry.Start) <= now && new Date(entry.Stop) >= now);
       const nextProgram = channelData.find(entry => new Date(entry.Start) > now);
       if (currentProgram && nextProgram) {
-        filteredData.push({ channelName: channel.name, id_tv: channel.id_tv, current: currentProgram, next: nextProgram });
+        filteredData.push({ channelName: channel.name, tv_channel_number: channel.tv_channel_number, current: currentProgram, next: nextProgram });
       }
     });
 
@@ -76,12 +76,14 @@ class ProgramGuideCard extends LitElement {
     this.programData = filteredData;
   }
 
-  updateQuery(element) {
+updateQuery(element) {
     if (element) {
-      this.query = element.srcElement.id;
-      this._toggleMenu();
+        const channelName = element.srcElement.id;
+        this.query = channelName;
+         console.log("Updated Query: ", this.query); // Logování pro debugging
+        this._toggleMenu();
     }
-  }
+}
 
   handleClickOnDetails(start, id) {
     let details = this.shadowRoot.querySelectorAll("details");
@@ -115,7 +117,7 @@ class ProgramGuideCard extends LitElement {
           <nav class='vertical-align-middle scroll'>
             ${this.programData.map(program => {
               return program.current
-                ? html`<span class='nav-item'><img src="${logoPath}${program.current.channelLogo}" id="${program.current.channel_id_tv}" @click="${this.updateQuery} "></span>`
+                ? html`<span class='nav-item'><img src="${logoPath}${program.current.logo_url}" id="${program.channelName}" @click="${this.updateQuery} "></span>`
                 : html`<div class="not-found">Entity ${program.current.entity} not found.</div>`;
             })}
           </nav>
@@ -125,12 +127,12 @@ class ProgramGuideCard extends LitElement {
       <div id="on_air">  
         ${this.programData.map(program => html`
           <section id="page">
-            <aside class="side"><img src="${logoPath}${program.current.channelLogo}" @click="${ev => this._ch_switch(program.current.channel_id_tv)}"></aside>
+            <aside class="side"><img src="${logoPath}${program.current.logo_url}" @click="${ev => this._ch_switch(program.tv_channel_number)}"></aside>
             <main>
               <details class="content">
                 <summary >
                   <span class="time">${program.current.startTime}</span>
-                  <span @click="${ev => this.handleClickOnDetails(program.current.Start, program.current.id_tv)}" class="summary-title" data-start="${program.current.Start}" data-id="${program.current.id_tv}">${program.current.Title}</span>
+                  <span @click="${ev => this.handleClickOnDetails(program.current.Start, program.tv_channel_number)}" class="summary-title" data-start="${program.current.Start}" data-id="${program.current.tv_channel_number}">${program.current.Title}</span>
                 </summary>
                 <div class="summary-content">${program.current.short_description}</div>
                 <div>
@@ -183,17 +185,17 @@ class ProgramGuideCard extends LitElement {
       <div id="full_day">
         ${this.combinedData
           .filter(entry => (new Date() >= new Date(entry.Start) && new Date() <= new Date(entry.Stop)) || new Date() < new Date(entry.Start))
-          .filter(entry => entry.channel_id_tv === this.query)
+          .filter(entry => entry.channel_name === this.query)
           .map(entry => html`
             <section id="page_full">
               <aside class="side">
-                <span class="time" @click="${ev => this._ch_switch(entry)}">${entry.startTime}</span><br>
-                <span class="timeStop">${entry.stopTime}</span>
+              <span class="time" >${this.formatTime(entry.Start)}</span><br>
+              <span class="timeStop">${this.formatTime(entry.Stop)}</span>
               </aside>
               <main>
                 <details class="content">
                   <summary>
-                    <span @click="${ev => this.handleClickOnDetails(entry.Start, entry.channel_id_tv)}" class="summary-title">${entry.Title}</span>
+                    <span @click="${ev => this.handleClickOnDetails(entry.Start, entry.tv_channel_number)}" class="summary-title">${entry.Title}</span>
                   </summary>
                   <div class="summary-content">${entry.short_description}</div>
                   <div>
@@ -216,6 +218,13 @@ class ProgramGuideCard extends LitElement {
     `;
   }
 
+  formatTime(dateTimeString) {
+    const date = new Date(dateTimeString);
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+  }
+
   calculateVolumeLevel() {
     if (!this._hass || !this._hass.states || !this.config) return 0;
     const state = this._hass.states[this.config.entity_id];
@@ -231,22 +240,14 @@ class ProgramGuideCard extends LitElement {
     return Math.min((elapsedDuration / totalDuration) * 100, 100);
   }
 
-  _toggleEpg() {
-    let x = this.shadowRoot.getElementById("full_day");
-    if (x.style.display === "none") {
-      x.style.display = "block";
-    } else {
-      x.style.display = "none";
-    }
-  }
-
   _toggleMenu() {
-    let x = this.shadowRoot.getElementById("on_air");
-    if (x.style.display === "none") {
-      x.style.display = "block";
-    } else {
-      x.style.display = "none";
-    }
+    this.shadowRoot.getElementById("full_day").style.display = "block";
+    this.shadowRoot.getElementById("on_air").style.display = "none";
+     this.updateQuery();
+  }
+  _toggleEpg() {
+    this.shadowRoot.getElementById("on_air").style.display = "block";
+    this.shadowRoot.getElementById("full_day").style.display = "none";
   }
 
   _ch_switch(id_tv) {

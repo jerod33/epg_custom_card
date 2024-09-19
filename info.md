@@ -3,7 +3,18 @@
 
 >.......
 
+{% set data = namespace(available_channels=[]) %}
+{% for channel in state_attr('sensor.epg_sensor_yesterday', 'data') %}
+  {% if channel.channel_name not in data.available_channels %}
+    {% set data.available_channels = data.available_channels + [channel.channel_name] %}
+  {% endif %}
+{% endfor %}
+{%- for name in data.available_channels %}
+- name: {{ name }}
+  tv_channel_number: null
+{%- endfor %}
 
+nebo :
 
 {% set epg_data = state_attr('sensor.epg_sensor_yesterday', 'data') %}
 {% set data = namespace(available_channels=[]) %}
