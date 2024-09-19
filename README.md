@@ -25,21 +25,20 @@ Možnost přizpůsobení vzhledu a rozložení
 Stáhněte si soubor tv-program-card.js a umístěte ho do složky www/epg_custom_card
 Přidejte kartu do souboru ui-lovelace.yaml:
 ```yaml
-#Zkopírovat kód
 resources:
   - url: /local/tv-program-card.js
     type: module
+    ```
 #Nakonfigurujte kartu ve svém ovládacím panelu Lovelace:
 ```yaml
-#Zkopírovat kód
 type: 'custom:tv-program-card'
 entity: sensor.tv_program
+```
 Požadavky:
 
-Verze Home Assistant 2023.1 nebo novější
 EPG senzor poskytující data televizního programu
-Poznámky: Tato karta je navržena tak, aby fungovala s jakoukoli integrací televizního programu, která poskytuje potřebná data přes senzor.
-
+Poznámky: Tato karta je navržena tak, aby fungovala s daty z integrace *[Tv-Program](https://github.com/jerod33/Tv-Program)*
+ 
 >.......
 
 {% set data = namespace(available_channels=[]) %}
