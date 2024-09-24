@@ -24,7 +24,7 @@ class ProgramGuideCard extends LitElement {
     this.channelNames = [];
     this.showRemote = false;
     console.info(
-      `%c EPG V 8.7.3 %c  `,
+      `%c EPG V 1.0.0 %c  `,
       'color: white; background: blue; font-weight: 700;',
       'color: blue; background: white; font-weight: 700;',
     );
@@ -108,7 +108,8 @@ updateQuery(element) {
   }
 
   render() {
-    const logoPath = "/local/program_guide/loga_velka/";
+    const logoPath = "/local/epg_custom_card/loga_velka/";
+    const iconPath = "/local/epg_custom_card/icon/";
     return html`
       <link rel="stylesheet" type="text/css" href="/local/scripts/ane.css" />
       <div class='epg-container'>
@@ -161,20 +162,20 @@ updateQuery(element) {
         ${this.showRemote ? html`
           <div class="remote">
             <input type="checkbox" name="remoteToggle" class="remoteToggle" />
-            <img src="/local/icon/remote-tv_36.png"/> 
+            <img src="${iconPath}remote-tv_36.png"/> 
             <div class="remoteButtons">
               ${this.config.tv_control_method === 'webostv' ? html`
-                <a href="#" title="Vypnout"><img src="/local/icon/power-off.png" style="width: 42px;opacity: 0.3;" @click="${ev => this._remote('EXIT')}" /> 
+                <a href="#" title="Vypnout"><img src="${iconPath}power-off.png" style="width: 42px;opacity: 0.3;" @click="${ev => this._remote('EXIT')}" /> 
                 <span class="timeStop" style="position: absolute; top: 12px; left: 7px; font-size: 14px;">EXIT</span>
                 </a>
               ` : html`
-                <a href="#" title="Vypnout"><img src="/local/icon/power-off.png" style="width: 42px;" @click="${ev => this._remote('POWER')}" /></a>
+                <a href="#" title="Vypnout"><img src="${iconPath}power-off.png" style="width: 42px;" @click="${ev => this._remote('POWER')}" /></a>
               `}
-              <a href="#" title="Mute"><img src="/local/icon/volume_mute_2_36.png" style="width: 42px;" @click="${ev => this._remote('MUTE')}"/></a>
-              <a href="#" title="Zvýšit hlasitost"><img src="/local/icon/volume_up_2_36.png" style="width: 42px; position: relative;" @click="${ev => this._remote('VOLUMEUP')}"/>
+              <a href="#" title="Mute"><img src="${iconPath}volume_mute_2_36.png" style="width: 42px;" @click="${ev => this._remote('MUTE')}"/></a>
+              <a href="#" title="Zvýšit hlasitost"><img src="${iconPath}volume_up_2_36.png" style="width: 42px; position: relative;" @click="${ev => this._remote('VOLUMEUP')}"/>
                 <span class="timeStop" style="position: absolute; top: 12px; left: 7px; font-size: 14px; color: white;" @click="${ev => this._remote('VOLUMEUP')}">${this.calculateVolumeLevel()}</span>
               </a>
-              <a href="#" title="Snížit hlasitost"><img src="/local/icon/volume_down_2_36.png" style="width: 42px; position: relative;" @click="${ev => this._remote('VOLUMEDOWN')}"/>
+              <a href="#" title="Snížit hlasitost"><img src="${iconPath}volume_down_2_36.png" style="width: 42px; position: relative;" @click="${ev => this._remote('VOLUMEDOWN')}"/>
                 <span class="timeStop" style="position: absolute; top: 12px; left: 7px; font-size: 14px; color: white;" @click="${ev => this._remote('VOLUMEDOWN')}">${this.calculateVolumeLevel()}</span>
               </a>
             </div>
