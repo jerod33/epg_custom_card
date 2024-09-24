@@ -1,5 +1,7 @@
 # TV Program karta
 
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg?style=for-the-badge)] 
+
 Tato vlastní karta zobrazuje interaktivní televizní program v Home Assistant. Umožňuje uživatelům prohlížet aktuální a nadcházející pořady přímo na ovládacím panelu.
 
 ## Funkce:
@@ -35,8 +37,7 @@ entity: sensor.tv_program
 ```
 Požadavky:
 
-EPG senzor poskytující data televizního programu
-Poznámky: Tato karta je navržena tak, aby fungovala s daty z integrace *[Tv-Program](https://github.com/jerod33/Tv-Program)*
+EPG senzor poskytující data televizního programu. Tato karta je navržena tak, aby fungovala s daty z integrace *[Tv-Program](https://github.com/jerod33/Tv-Program)*
  
 >.......
 
