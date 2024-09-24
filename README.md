@@ -45,7 +45,7 @@ Jakmile je zdroj přidán, můžete konfigurovat kartu ve svém Lovelace rozhran
     channel_info:
       - name: ČT2
         tv_channel_number: '7_41_20_0_3212_14052_3'
-    ```
+```
 
 ### Konfigurační možnosti
 
@@ -56,9 +56,9 @@ Jakmile je zdroj přidán, můžete konfigurovat kartu ve svém Lovelace rozhran
 - **`show_remote`**: (Volitelné) Zobrazí dalkové ovládání tv, defaultně je false.
 - **`tv_control_method`**: (Povinné pokud chceme ovládat tv) lgwebos nebo ??.
 - **`channels`**: (Povinné) Seznam TV kanálů. Každý kanál vyžaduje:
-  - **`id`**: (Povinné) ID kanálu.
-  - **`name`**: (Povinné) Zobrazovaný název kanálu.
-  - **`tv_channel_number:`**: (Povinné pokud chceme ovládat tv) Číslo kanálu v tv u remote, u lg webos je to channelId. Musí být string.
+- **`id`**: (Povinné) ID kanálu.
+- **`name`**: (Povinné) Zobrazovaný název kanálu.
+- **`tv_channel_number:`**: (Povinné pokud chceme ovládat tv) Číslo kanálu v tv u remote, u lg webos je to channelId. Musí být string.
 
 ### Příklad
 
