@@ -35,15 +35,15 @@ Restartujte Home Assistant.
 Jakmile je zdroj přidán, můžete konfigurovat kartu ve svém Lovelace rozhraní. Použijte následující YAML konfiguraci pro přidání karty:
 
 ```yaml
-    type: custom:program-guide-card
-    epg_today: sensor.epg_sensor_day_0
-    epg_yesterday: sensor.epg_sensor_yesterday
-    show_remote: true
-    entity_id: media_player.living_room_tv_2
-    tv_control_method: webostv
-    channel_info:
-      - name: ČT2
-        tv_channel_number: '7_41_20_0_3212_14052_3'
+type: custom:program-guide-card
+epg_today: sensor.epg_sensor_day_0
+epg_yesterday: sensor.epg_sensor_yesterday
+show_remote: true
+entity_id: media_player.living_room_tv_2
+tv_control_method: webostv
+channel_info:
+  - name: ČT2
+    tv_channel_number: '7_41_20_0_3212_14052_3'
 ```
 
 ### Konfigurační možnosti
@@ -64,34 +64,34 @@ Jakmile je zdroj přidán, můžete konfigurovat kartu ve svém Lovelace rozhran
 Zde je příklad, jak použít vlastní kartu v Lovelace pro LG WebOS:
 
 ```yaml
-    type: custom:program-guide-card
-    epg_today: sensor.epg_sensor_day_0
-    epg_yesterday: sensor.epg_sensor_yesterday
-    show_remote: true
-    entity_id: media_player.living_room_tv_2
-    tv_control_method: webostv
-    channel_info:
-      - name: ČT
-        tv_channel_number: '7_41_20_0_3212_14052_3'
-      - name: ČT2
-        tv_channel_number: '7_41_20_0_3212_14052_4'  
+type: custom:program-guide-card
+epg_today: sensor.epg_sensor_day_0
+epg_yesterday: sensor.epg_sensor_yesterday
+show_remote: true
+entity_id: media_player.living_room_tv_2
+tv_control_method: webostv
+channel_info:
+  - name: ČT
+    tv_channel_number: '7_41_20_0_3212_14052_3'
+  - name: ČT2
+    tv_channel_number: '7_41_20_0_3212_14052_4'  
 ```
  
  Zde je příklad, jak použít vlastní kartu v Lovelace pro Remote:
 
 ```yaml
-    type: custom:program-guide-card
-    epg_today: sensor.epg_sensor_day_0
-    epg_yesterday: sensor.epg_sensor_yesterday
-    show_remote: true
-    tv_control_method: remote
-    entity_id: remote.ovladac_remote
-    remote_device: television
-    channel_info:
-      - name: ČT
-        tv_channel_number: '1'
-      - name: ČT2
-        tv_channel_number: '11'  
+type: custom:program-guide-card
+epg_today: sensor.epg_sensor_day_0
+epg_yesterday: sensor.epg_sensor_yesterday
+show_remote: true
+tv_control_method: remote
+entity_id: remote.ovladac_remote
+remote_device: television
+channel_info:
+  - name: ČT
+    tv_channel_number: '1'
+  - name: ČT2
+    tv_channel_number: '11'  
 ```
  
 ##Požadavky:
@@ -100,14 +100,14 @@ Tato karta je vytvořena pro práci s daty z integrace *[Tv-Program](https://git
 Pro snadnější nastavení konfigurace můžete v nástrojích pro vývojáře šablon použít následující kód:**
 
 ```yaml
-    {% set data = namespace(available_channels=[]) %}
-    {% for channel in state_attr('sensor.epg_sensor_yesterday', 'data') %}
-      {% if channel.channel_name not in data.available_channels %}
-        {% set data.available_channels = data.available_channels + [channel.channel_name] %}
-      {% endif %}
-    {% endfor %}
-    {%- for name in data.available_channels %}
-    - name: {{ name }}
-      tv_channel_number: null
-    {%- endfor %}
+{% set data = namespace(available_channels=[]) %}
+{% for channel in state_attr('sensor.epg_sensor_yesterday', 'data') %}
+  {% if channel.channel_name not in data.available_channels %}
+    {% set data.available_channels = data.available_channels + [channel.channel_name] %}
+  {% endif %}
+{% endfor %}
+{%- for name in data.available_channels %}
+- name: {{ name }}
+  tv_channel_number: null
+{%- endfor %}
 ```
