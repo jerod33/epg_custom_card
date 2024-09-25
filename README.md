@@ -63,7 +63,7 @@ Jakmile je zdroj přidán, můžete konfigurovat kartu ve svém Lovelace rozhran
 
 Zde je příklad, jak použít vlastní kartu v Lovelace pro LG WebOS:
 
-    ```yaml
+    ```
     type: custom:program-guide-card
     epg_today: sensor.epg_sensor_day_0
     epg_yesterday: sensor.epg_sensor_yesterday
@@ -79,7 +79,7 @@ Zde je příklad, jak použít vlastní kartu v Lovelace pro LG WebOS:
  
  Zde je příklad, jak použít vlastní kartu v Lovelace pro Remote:
 
-    ```yaml
+    ```
     type: custom:program-guide-card
     epg_today: sensor.epg_sensor_day_0
     epg_yesterday: sensor.epg_sensor_yesterday
@@ -99,15 +99,15 @@ Zde je příklad, jak použít vlastní kartu v Lovelace pro LG WebOS:
 Tato karta je vytvořena pro práci s daty z integrace *[Tv-Program](https://github.com/jerod33/Tv-Program).* 
 Pro snadnější nastavení konfigurace můžete v nástrojích pro vývojáře šablon použít následující kód:**
 
-```jinja
-{% set data = namespace(available_channels=[]) %}
-{% for channel in state_attr('sensor.epg_sensor_yesterday', 'data') %}
-  {% if channel.channel_name not in data.available_channels %}
-    {% set data.available_channels = data.available_channels + [channel.channel_name] %}
-  {% endif %}
-{% endfor %}
-{%- for name in data.available_channels %}
-- name: {{ name }}
-  tv_channel_number: null
-{%- endfor %}
+```
+    {% set data = namespace(available_channels=[]) %}
+    {% for channel in state_attr('sensor.epg_sensor_yesterday', 'data') %}
+      {% if channel.channel_name not in data.available_channels %}
+        {% set data.available_channels = data.available_channels + [channel.channel_name] %}
+      {% endif %}
+    {% endfor %}
+    {%- for name in data.available_channels %}
+    - name: {{ name }}
+      tv_channel_number: null
+    {%- endfor %}
 ```
