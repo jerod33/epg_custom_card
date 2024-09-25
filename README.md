@@ -51,13 +51,12 @@ channel_info:
 - **`type`**: (Povinné) Musí být `custom:program-guide-card` pro načtení vlastní karty.
 - **`epg_today`**: (Povinné) Musí být `sensor.epg_sensor_day_0`.
 - **`epg_yesterday`**: (Povinné) Musí být `sensor.epg_sensor_yesterday`.
-- **`entity_id`**: (Povinné pokud chceme ovládat tv) Sensor tv, která má byt ovládána (LG webOS ,  Remote)`.
+- **`entity_id`**: (Povinné pokud chceme ovládat tv) Sensor tv, která má byt ovládána (LG WebOS ,  Remote).
 - **`show_remote`**: (Volitelné) Zobrazí dalkové ovládání tv, defaultně je false.
-- **`tv_control_method`**: (Povinné pokud chceme ovládat tv) lgwebos nebo ??.
-- **`channels`**: (Povinné) Seznam TV kanálů. Každý kanál vyžaduje:
-- **`id`**: (Povinné) ID kanálu.
+- **`tv_control_method`**: (Povinné pokud chceme ovládat tv) LG WebOS nebo Remote.
+- **`channel_info`**: (Povinné) Seznam TV kanálů. Každý kanál vyžaduje:
 - **`name`**: (Povinné) Zobrazovaný název kanálu.
-- **`tv_channel_number:`**: (Povinné pokud chceme ovládat tv) Číslo kanálu v tv u remote, u lg webos je to channelId. Musí být 'string'.
+- **`tv_channel_number:`**: (Povinné pokud chceme ovládat tv) Číslo kanálu v tv u remote, u LG WebOS je to channelId. Musí být 'string'.
 
 ### Příklad
 
