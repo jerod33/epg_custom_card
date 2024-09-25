@@ -17,7 +17,7 @@ class ProgramGuideCard extends LitElement {
       channelNames: { type: Array }
     };
   }
-//toto - nahradit v query pro prepinani mezi dennim a aktualnim vysledkem vyhledavani id za vyhledavani nazvu kanalu
+//todo - nahradit v query pro prepinani mezi dennim a aktualnim vysledkem vyhledavani id za vyhledavani nazvu kanalu
   constructor() {
     super();
     this.programData = [];
@@ -32,7 +32,7 @@ class ProgramGuideCard extends LitElement {
 
   setConfig(config) {
     if (!config.epg_today || !config.epg_yesterday || !config.channel_info) {
-      throw new Error("You need to define epg_today, epg_yesterday, and channel_info in the configuration.");
+      throw new Error("Je potřeba definovat epg_today, epg_yesterday nebo channel_info v konfiguraci.");
     }
     this.config = config;
   }
@@ -263,7 +263,7 @@ updateQuery(element) {
     else 
       if (this.config.tv_control_method === 'remote') {
   
-      const device = this.config.remote_device || "television"; // Použijte konfigurované zařízení nebo výchozí hodnotu
+      const device = this.config.remote_device || "television"; //   výchozí hodnotu odstranit
     var tv_channel_id_str = tv_channel_id.toString();
       if (tv_channel_id_str.length > 1) {
       var ent_id = [];
@@ -278,14 +278,14 @@ updateQuery(element) {
   
      this._hass.callService("remote", "send_command", {
         entity_id: "remote.ovladac_remote",
-        device: this.config.remote_device || "television",
+        device: this.config.remote_device || "television", //   výchozí hodnotu odstranit
         command: ent_id
       });
     
     
        
     console.log("command:", ent_id);
-    console.log("device:", this.config.remote_device || "television");
+    console.log("device:", this.config.remote_device || "television"); //   výchozí hodnotu odstranit
     }
   }
 
@@ -297,8 +297,8 @@ updateQuery(element) {
       });
     } else if (this.config.tv_control_method === 'remote') {
       this._hass.callService("remote", "send_command", {
-        entity_id: "remote.ovladac_remote", // tady nahradit entity id
-        device: this.config.remote_device || "television", // Použijte konfigurované zařízení nebo výchozí hodnotu
+        entity_id: this.config.entity_id,  
+        device: this.config.remote_device || "television", //   výchozí hodnotu odstranit
         command: state
       });
     }

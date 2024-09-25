@@ -1,6 +1,5 @@
 # TV Program karta
 
-[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg?style=for-the-badge)] 
 
 Tato vlastní karta zobrazuje interaktivní televizní program v Home Assistant. Umožňuje uživatelům prohlížet aktuální a nadcházející pořady přímo na ovládacím panelu.
 
@@ -58,7 +57,7 @@ Jakmile je zdroj přidán, můžete konfigurovat kartu ve svém Lovelace rozhran
 - **`channels`**: (Povinné) Seznam TV kanálů. Každý kanál vyžaduje:
 - **`id`**: (Povinné) ID kanálu.
 - **`name`**: (Povinné) Zobrazovaný název kanálu.
-- **`tv_channel_number:`**: (Povinné pokud chceme ovládat tv) Číslo kanálu v tv u remote, u lg webos je to channelId. Musí být string.
+- **`tv_channel_number:`**: (Povinné pokud chceme ovládat tv) Číslo kanálu v tv u remote, u lg webos je to channelId. Musí být 'string'.
 
 ### Příklad
 
@@ -78,13 +77,29 @@ Zde je příklad, jak použít vlastní kartu v Lovelace pro LG WebOS:
         tv_channel_number: '7_41_20_0_3212_14052_4'  
     ```
  
+ Zde je příklad, jak použít vlastní kartu v Lovelace pro Remote:
+
+    ```yaml
+    type: custom:program-guide-card
+    epg_today: sensor.epg_sensor_day_0
+    epg_yesterday: sensor.epg_sensor_yesterday
+    show_remote: true
+    tv_control_method: remote
+    entity_id: remote.ovladac_remote
+    remote_device: television
+    channel_info:
+      - name: ČT
+        tv_channel_number: '1'
+      - name: ČT2
+        tv_channel_number: '11'  
+    ```
  
 ##Požadavky:
 
-EPG senzor poskytující data televizního programu. Tato karta je navržena tak, aby fungovala s daty z integrace *[Tv-Program](https://github.com/jerod33/Tv-Program)*
- 
->.......
+Tato karta je vytvořena pro práci s daty z integrace *[Tv-Program](https://github.com/jerod33/Tv-Program).* 
+Pro snadnější nastavení konfigurace můžete v nástrojích pro vývojáře šablon použít následující kód:**
 
+```jinja
 {% set data = namespace(available_channels=[]) %}
 {% for channel in state_attr('sensor.epg_sensor_yesterday', 'data') %}
   {% if channel.channel_name not in data.available_channels %}
@@ -95,3 +110,4 @@ EPG senzor poskytující data televizního programu. Tato karta je navržena tak
 - name: {{ name }}
   tv_channel_number: null
 {%- endfor %}
+```
