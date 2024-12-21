@@ -24,7 +24,7 @@ class ProgramGuideCard extends LitElement {
     this.channelNames = [];
     this.showRemote = false;
     console.info(
-      `%c EPG V 1.0.2 %c  `,
+      `%c EPG V 1.0.3 %c  `,
       'color: white; background: blue; font-weight: 700;',
       'color: blue; background: white; font-weight: 700;',
     );
@@ -132,7 +132,7 @@ updateQuery(element) {
             <main>
               <details class="content">
                 <summary >
-                  <span class="time">${this.formatTime(program.current.startTime)}</span>
+                  <span class="time">${this.formatTime(program.current.Start)}</span>
                   <span @click="${ev => this.handleClickOnDetails(program.current.Start, program.tv_channel_number)}" class="summary-title" data-start="${program.current.Start}" data-id="${program.current.tv_channel_number}">${program.current.Title}</span>
                 </summary>
                 <div class="summary-content">${program.current.short_description}</div>
@@ -150,7 +150,7 @@ updateQuery(element) {
               </div>
               <details>
                 <summary>
-                  <span>${this.formatTime(program.next.startTime)}</span>
+                  <span>${this.formatTime(program.next.Start)}</span>
                   <span @click="${ev => this.handleClickOnDetails(program.next.Start, program.next.id_tv)}" class="summary-title">${program.next.Title}</span> 
                 </summary>
                 <div class="summary-content">${program.next.short_description}</div>
