@@ -132,7 +132,7 @@ updateQuery(element) {
             <main>
               <details class="content">
                 <summary >
-                  <span class="time">${program.current.startTime}</span>
+                  <span class="time">${this.formatTime(program.current.startTime)}</span>
                   <span @click="${ev => this.handleClickOnDetails(program.current.Start, program.tv_channel_number)}" class="summary-title" data-start="${program.current.Start}" data-id="${program.current.tv_channel_number}">${program.current.Title}</span>
                 </summary>
                 <div class="summary-content">${program.current.short_description}</div>
@@ -150,7 +150,7 @@ updateQuery(element) {
               </div>
               <details>
                 <summary>
-                  <span>${program.next.startTime}</span>
+                  <span>${this.formatTime(program.next.startTime)}</span>
                   <span @click="${ev => this.handleClickOnDetails(program.next.Start, program.next.id_tv)}" class="summary-title">${program.next.Title}</span> 
                 </summary>
                 <div class="summary-content">${program.next.short_description}</div>
