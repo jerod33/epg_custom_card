@@ -24,7 +24,7 @@ class ProgramGuideCard extends LitElement {
     this.channelNames = [];
     this.showRemote = false;
     console.info(
-      `%c EPG V 1.0.3 %c  `,
+      `%c EPG V 1.0.4 %c  `,
       'color: white; background: blue; font-weight: 700;',
       'color: blue; background: white; font-weight: 700;',
     );
@@ -108,13 +108,13 @@ updateQuery(element) {
   }
 
   render() {
-    const logoPath = "/local/epg_custom_card/loga_velka/";
-    const iconPath = "/local/epg_custom_card/icon/";
+    const logoPath = "loga_velka/";
+    const iconPath = "icon/";
     return html`
-      <link rel="stylesheet" type="text/css" href="/local/scripts/ane.css" />
+      <link rel="stylesheet" type="text/css" href="" />
       <div class='epg-container'>
         <header class='epg-container-header'>
-          <span class='logo'><img src="/local/loga_velka/epg.png" @click="${ev => this._toggleEpg()}"></span>
+          <span class='logo'><img src="loga_velka/epg.png" @click="${ev => this._toggleEpg()}"></span>
           <nav class='vertical-align-middle scroll'>
             ${this.programData.map(program => {
               return program.current
