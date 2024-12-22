@@ -80,7 +80,7 @@ updateQuery(element) {
     if (element) {
         const channelName = element.srcElement.id;
         this.query = channelName;
-         console.log("Updated Query: ", this.query); // Logování pro debugging
+         console.log("Updated Query: ", this.query); //  
         this._toggleMenu();
     }
 }
