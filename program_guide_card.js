@@ -24,7 +24,7 @@ class ProgramGuideCard extends LitElement {
     this.channelNames = [];
     this.showRemote = false;
     console.info(
-      `%c EPG V 1.0.4 %c  `,
+      `%c EPG V 1.0.5 %c  `,
       'color: white; background: blue; font-weight: 700;',
       'color: blue; background: white; font-weight: 700;',
     );
