@@ -108,13 +108,13 @@ updateQuery(element) {
   }
 
   render() {
-    const logoPath = "loga_velka/";
-    const iconPath = "icon/";
+    const logoPath = "/local/www/community/epg_custom_card/loga_velka/";
+    const iconPath = "/local/www/community/epg_custom_card/icon/";
     return html`
       <link rel="stylesheet" type="text/css" href="" />
       <div class='epg-container'>
         <header class='epg-container-header'>
-          <span class='logo'><img src="loga_velka/epg.png" @click="${ev => this._toggleEpg()}"></span>
+          <span class='logo'><img src="/local/www/community/loga_velka/epg.png" @click="${ev => this._toggleEpg()}"></span>
           <nav class='vertical-align-middle scroll'>
             ${this.programData.map(program => {
               return program.current
