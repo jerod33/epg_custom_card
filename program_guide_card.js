@@ -61,7 +61,7 @@ class ProgramGuideCard extends LitElement {
     this.combinedData = combinedData;
     const now = new Date();
 
-    // Filtrujeme pouze aktuálně vysílaný program a jeden následující program pro každý kanál
+  
     const filteredData = [];
     this.config.channel_info.forEach(channel => {
       const channelData = combinedData.filter(entry => entry.channel_name === channel.name);
