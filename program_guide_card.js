@@ -111,8 +111,7 @@ updateQuery(element) {
     const logoPath = this.config.logoPath || "/local/loga_velka/";
     const iconPath = this.config.iconPath || "/local/icon/" ;
    
-    //const logoPath = "/local/www/community/epg_custom_card/loga_velka/";
-    //const iconPath = "/local/www/community/epg_custom_card/icon/";
+   
     return html`
       <link rel="stylesheet" type="text/css" href="" />
       <div class='epg-container'>
@@ -209,11 +208,7 @@ updateQuery(element) {
                   </div>    
                 </details>
                 <div></div>
-                <div>  
-                  <div class="d1">
-                    <div class="d2" style="width: ${this.calculateProgramWidth(entry.Start, entry.Stop)}%;"></div>      
-                  </div>  
-                </div>
+ 
               </main>
             </section>
           `)
