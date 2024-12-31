@@ -41,6 +41,8 @@ epg_yesterday: sensor.epg_sensor_yesterday
 show_remote: true
 entity_id: media_player.living_room_tv_2
 tv_control_method: webostv
+logoPath: /local/loga_velka/
+iconPath: /local/icon/
 channel_info:
   - name: ČT2
     tv_channel_number: '7_41_20_0_3212_14052_3'
@@ -56,7 +58,9 @@ channel_info:
 - **`tv_control_method`**: (Povinné pokud chceme ovládat tv) LG WebOS nebo Remote.
 - **`channel_info`**: (Povinné) Seznam TV kanálů. Každý kanál vyžaduje:
 - **`name`**: (Povinné) Zobrazovaný název kanálu.
-- **`tv_channel_number:`**: (Povinné pokud chceme ovládat tv) Číslo kanálu v tv u remote, u LG WebOS je to channelId. Musí být 'string'.
+- **`tv_channel_number`**: (Povinné pokud chceme ovládat tv) Číslo kanálu v tv u remote, u LG WebOS je to channelId. Musí být 'string'.
+- **`logoPath`**: (Povinné) Pokud cesta není zadána v konfiguraci, použije se `/local/loga_velka/`
+- **`iconPath`**: (Povinné) Pokud cesta není zadána v konfiguraci, použije se `/local/icon/`
 
 ### Příklad
 
@@ -69,6 +73,8 @@ epg_yesterday: sensor.epg_sensor_yesterday
 show_remote: true
 entity_id: media_player.living_room_tv_2
 tv_control_method: webostv
+logoPath: /local/loga_velka/
+iconPath: /local/icon/
 channel_info:
   - name: ČT
     tv_channel_number: '7_41_20_0_3212_14052_3'
@@ -86,6 +92,8 @@ show_remote: true
 tv_control_method: remote
 entity_id: remote.ovladac_remote
 remote_device: television
+logoPath: /local/loga_velka/
+iconPath: /local/icon/
 channel_info:
   - name: ČT
     tv_channel_number: '1'
