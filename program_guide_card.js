@@ -108,8 +108,11 @@ updateQuery(element) {
   }
 
   render() {
-    const logoPath = "/local/www/community/epg_custom_card/loga_velka/";
-    const iconPath = "/local/www/community/epg_custom_card/icon/";
+    const logoPath = this.config.logoPath ;
+    const iconPath = this.config.iconPath  ;
+   
+    //const logoPath = "/local/www/community/epg_custom_card/loga_velka/";
+    //const iconPath = "/local/www/community/epg_custom_card/icon/";
     return html`
       <link rel="stylesheet" type="text/css" href="" />
       <div class='epg-container'>
