@@ -24,7 +24,7 @@ class ProgramGuideCard extends LitElement {
     this.channelNames = [];
     this.showRemote = false;
     console.info(
-      `%c EPG V 0.1.4 %c  `,
+      `%c EPG V 0.1.6 %c  `,
       'color: white; background: blue; font-weight: 700;',
       'color: blue; background: white; font-weight: 700;',
     );
@@ -108,7 +108,9 @@ updateQuery(element) {
   }
 
   render() {
-    const logoPath = this.config.logoPath || "/local/loga_velka/";
+    const logoPath = this.config.logoPath || "https://www.sms.cz/kategorie/televize/bmp/loga/velka/";
+
+    //const logoPath = this.config.logoPath || "/local/loga_velka/";
     const iconPath = this.config.iconPath || "/local/icon/" ;
    
    
