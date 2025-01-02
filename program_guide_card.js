@@ -118,7 +118,7 @@ updateQuery(element) {
       <link rel="stylesheet" type="text/css" href="" />
       <div class='epg-container'>
         <header class='epg-container-header'>
-          <span class='logo'><img src="${logoPath}epg.png" @click="${ev => this._toggleEpg()}"></span>
+          <span class='logo'><img src="${iconPath}epg.png" @click="${ev => this._toggleEpg()}"></span>
           <nav class='vertical-align-middle scroll'>
             ${this.programData.map(program => {
               return program.current
