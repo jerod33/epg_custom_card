@@ -1,8 +1,7 @@
-import {
-  LitElement,
-  html,
-  css
-} from "https://unpkg.com/lit-element@2.0.1/lit-element.js?module";
+
+const LitElement = Object.getPrototypeOf(customElements.get("ha-panel-lovelace"));
+const html = LitElement.prototype.html;
+const css = LitElement.prototype.css;
 
 class ProgramGuideCard extends LitElement {
   static get properties() {
@@ -23,11 +22,11 @@ class ProgramGuideCard extends LitElement {
     this.programData = [];
     this.channelNames = [];
     this.showRemote = false;
-    console.info(
-      `%c EPG V 0.1.6 %c  `,
-      'color: white; background: blue; font-weight: 700;',
-      'color: blue; background: white; font-weight: 700;',
-    );
+		console.info(
+		  `%c EPG V 0.1.7 %c  `,
+		  'color: white; background: blue; font-weight: 700;',
+		  'color: blue; background: white; font-weight: 700;',
+		);
   }
 
   setConfig(config) {
