@@ -121,7 +121,7 @@ updateQuery(element) {
           <nav class='vertical-align-middle scroll'>
             ${this.programData.map(program => {
               return program.current
-                ? html`<span class='nav-item'><img src="${logoPath}${program.current.logo_url}" id="${program.channelName}" @click="${this.updateQuery} "></span>`
+                ? html`<span class='nav-item'><img src="${logoPath}${program.current.logo_url}" id="${program.channelName}" @click="${this.updateQuery}"></span>`
                 : html`<div class="not-found">Entity ${program.current.entity} not found.</div>`;
             })}
           </nav>
